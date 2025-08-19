@@ -1,0 +1,21 @@
+<div [class.dark-theme]="isDark" class="page">
+  <app-topbar (themeEvent)="onThemeSelected($event)"></app-topbar>
+  <div class="page-fancy-divider"></div>
+  <div class="page-body">
+    <div class="page-body-inner">
+      <workflow-dashboard />
+    </div>
+  </div>
+  <div class="page-fancy-divider"></div>
+  <div class="page-footer">
+    <div class="page-footer-inner">
+      <a
+        mat-button
+        color="primary"
+        class="caption"
+        href="https://www.freepik.com/icon/data-analysis_2110161#fromView=search&term=report&page=1&position=75&track=ais"
+        >Statistical Analysis Icon by berkahicon</a
+      >
+    </div>
+  </div>
+</div>

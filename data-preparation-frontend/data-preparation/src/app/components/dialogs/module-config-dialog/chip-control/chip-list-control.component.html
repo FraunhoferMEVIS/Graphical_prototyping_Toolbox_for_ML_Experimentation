@@ -1,0 +1,31 @@
+<mat-form-field
+  class="form-field"
+>
+  <mat-label>{{ label }} (multiple)</mat-label>
+  <mat-chip-grid #chipGrid aria-label="Enter values" [formControl]="control">
+    <mat-chip-row
+      *ngFor="let element of values"
+      (removed)="remove(element)"
+      [aria-description]="'press enter to edit ' + element"
+    >
+      {{ element }}
+      <button matChipRemove [attr.aria-label]="'remove ' + element">
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </mat-chip-row>
+    <input
+      placeholder="Press enter to add a value..."
+      [matChipInputFor]="chipGrid"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      (matChipInputTokenEnd)="add($event)"
+      [type]="type"
+    />
+  </mat-chip-grid>
+  <mat-icon
+    *ngIf="description != null && description.trim().length > 0"
+    [matTooltip]="description"
+    matSuffix
+    >info</mat-icon
+  >
+  <mat-error *ngIf="!control.valid">{{ error ?? '' }}</mat-error>
+</mat-form-field>

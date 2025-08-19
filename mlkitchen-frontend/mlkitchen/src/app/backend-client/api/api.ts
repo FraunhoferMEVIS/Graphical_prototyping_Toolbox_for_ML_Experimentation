@@ -1,0 +1,13 @@
+export * from './data.service';
+import { DataService } from './data.service';
+export * from './default.service';
+import { DefaultService } from './default.service';
+export * from './execute.service';
+import { ExecuteService } from './execute.service';
+export * from './methods.service';
+import { MethodsService } from './methods.service';
+export * from './recipe.service';
+import { RecipeService } from './recipe.service';
+export * from './results.service';
+import { ResultsService } from './results.service';
+export const APIS = [DataService, DefaultService, ExecuteService, MethodsService, RecipeService, ResultsService];

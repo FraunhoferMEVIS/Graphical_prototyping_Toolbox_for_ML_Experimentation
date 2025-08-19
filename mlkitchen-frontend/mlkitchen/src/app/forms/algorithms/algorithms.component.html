@@ -1,0 +1,120 @@
+<mat-toolbar class="algorithm-container">
+  <div
+    class="formGroup"
+    [formGroup]="this.methodSelectionService.generalFormGroup"
+  >
+    <mat-button-toggle-group formControlName="mode">
+      <mat-button-toggle color="secondary" value="options"
+        ><mat-icon>store</mat-icon></mat-button-toggle
+      >
+      <mat-button-toggle value="selected"
+        ><mat-icon
+          [matBadge]="this.methodSelectionService.getNumberSelectedAlgorithms()"
+          >shopping_cart</mat-icon
+        ></mat-button-toggle
+      >
+    </mat-button-toggle-group>
+    <mat-form-field appearance="outline">
+      <mat-label>Search</mat-label>
+      <input matInput formControlName="search" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Filters</mat-label>
+      <mat-select [formControl]="filters" multiple>
+        <mat-select-trigger>
+          {{filters.value?.[0] || ''}}
+          <span
+            *ngIf="(filters.value?.length || 0) > 1"
+            class="example-additional-selection"
+          >
+            (+{{ (filters.value?.length || 0) - 1 }}
+            {{ filters.value?.length === 2 ? "other" : "others" }})
+          </span>
+        </mat-select-trigger>
+        <mat-option
+          *ngFor="let filter of this.possibleFilters"
+          [value]="filter"
+          >{{ filter }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+    <mat-button-toggle-group
+      [(value)]="layout"
+      name="layoutStyle"
+      class="toggle-layout"
+      aria-label="Layout Style"
+    >
+      <mat-button-toggle matTooltip="List layout" value="list"
+        ><mat-icon>list</mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle matTooltip="Grid layout" value="grid"
+        ><mat-icon>grid_view</mat-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+</mat-toolbar>
+<ng-container
+  *ngIf="
+    this.methodSelectionService.generalFormGroup.controls.mode.value ===
+    'options'
+  "
+>
+  <mat-grid-list
+    [cols]="breakpoint"
+    rowHeight="100px"
+    (window:resize)="onResize($event)"
+    gutterSize="10px"
+    *ngIf="this.layout === 'grid'"
+  >
+    <div [formGroup]="this.specificFormGroup">
+      <mat-grid-tile
+        [rowspan]="1"
+        [colspan]="1"
+        *ngFor="let a of this.filteredOptions"
+      >
+        <mat-card>
+          <mat-card-header
+            ><mat-card-title>{{ a }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content></mat-card-content>
+          <mat-card-actions align="end">
+            <button
+              mat-icon-button
+              color="primary"
+              (click)="this.openDialog(a)"
+            >
+              <mat-icon>add_circle</mat-icon>
+            </button>
+          </mat-card-actions>
+          <mat-card-footer> </mat-card-footer>
+        </mat-card>
+      </mat-grid-tile>
+    </div>
+  </mat-grid-list>
+  <div *ngIf="layout == 'list'" class="table-container">
+    <table
+      mat-table
+      [dataSource]="this.filteredOptions"
+      class="mat-elevation-z8"
+    >
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element">{{ element }}</td>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <td mat-cell *matCellDef="let element">
+          <button
+            mat-icon-button
+            color="primary"
+            (click)="this.openDialog(element)"
+          >
+            <mat-icon>add_circle</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="['name', 'action']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['name', 'action']"></tr>
+    </table>
+  </div>
+</ng-container>

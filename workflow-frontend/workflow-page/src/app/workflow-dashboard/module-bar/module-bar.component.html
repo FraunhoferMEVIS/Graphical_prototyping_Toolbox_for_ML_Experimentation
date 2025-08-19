@@ -1,0 +1,11 @@
+<div class="module-bar">
+  <div class="module-bar-modules">
+    <module-card
+      *ngFor="let m of modules"
+      [module]="m"
+      draggable
+      [model]="m"
+    />
+  </div>
+  <!-- <div class="module-bar-help bg-teal-500 text-white">Drag on a tool on the canvas to start building a workflow.</div> -->
+</div>

@@ -1,0 +1,37 @@
+<div class="table-container mat-elevation-z8" (scroll)="onTableScroll($event)">
+  <div *ngIf="noDataAvailable()" class="label-no-data mat-h3 text-color">
+    {{ errorMessage }}
+  </div>
+  <table mat-table class="table" [dataSource]="tableDataSource">
+    <div *ngFor="let column of columns">
+      <ng-container matColumnDef="{{ column.name }}">
+        <th mat-header-cell [matTooltip]="column.type" *matHeaderCellDef>
+          {{ column.name }}
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <div [ngSwitch]="column.type">
+            <div *ngSwitchCase="'string'">
+              {{ row[column.name] }}
+            </div>
+            <div *ngSwitchCase="'bool'">
+              {{ row[column.name] }}
+            </div>
+            <div *ngSwitchCase="'number'">
+              <!-- converting to Number beforehand is required for performance.
+                Without it, the 'number' pipe is very slow if input is of type string -->
+              <!-- {{ Number(row[column.name]) | number: '.0-2' }} -->
+              {{ row[column.name] }}
+            </div>
+            <div *ngSwitchDefault>{{ row[column.name] }}</div>
+          </div>
+        </td>
+      </ng-container>
+    </div>
+    <tr
+      mat-header-row
+      *matHeaderRowDef="getColumnNames(columns); sticky: true"
+    ></tr>
+    <tr mat-row *matRowDef="let row; columns: getColumnNames(columns)"></tr>
+  </table>
+  <mat-spinner *ngIf="loading" diameter="30" class="spinner"></mat-spinner>
+</div>

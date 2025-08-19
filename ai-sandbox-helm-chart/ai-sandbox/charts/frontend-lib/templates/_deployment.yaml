@@ -1,0 +1,54 @@
+{{- define "frontend-lib.deployment" }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    cds-app: {{ .Values.frontend.name }}
+    pod-svc: {{ .Values.frontend.name }}
+  name: {{ .Values.frontend.name }}
+  {{ if .Values.global.namespace }}
+  namespace: {{ .Values.global.namespace }}
+  {{ end }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      cds-app: {{ .Values.frontend.name }}
+  template:
+    metadata:
+      labels:
+        cds-app: {{ .Values.frontend.name }}
+        pod-svc: {{ .Values.frontend.name }}
+    spec:
+      securityContext:
+        {{- toYaml .Values.global.podSecurityContext | nindent 8 }}
+      nodeSelector:
+        node-role.kubernetes.io/control-plane: "true"
+      {{ if .Values.global.dockerRegistry.imagePullSecret }}
+      imagePullSecrets:
+        - name: {{ .Values.global.dockerRegistry.imagePullSecret }}
+      {{ end }}
+      containers:
+        - image: {{ .Values.global.dockerRegistry.registry }}/{{ .Values.frontend.image.name }}:{{ .Values.frontend.image.tag }}
+          name: {{ .Values.frontend.name }}
+          securityContext:
+            {{- toYaml .Values.global.securityContext | nindent 12 }}
+          env: 
+            {{ range $key, $val := .Values.frontend.env }}
+            - name: {{ $key }}
+              value: {{ $val }}
+            {{ end }}
+          ports:
+            {{ if .Values.frontend.costumeContainerPort }}
+            - containerPort: {{.Values.frontend.costumeContainerPort }}
+            {{ else }}
+            - containerPort: 80
+            {{ end }}
+          resources:
+            limits:
+              cpu: "0.5"
+              memory: 512M
+            requests:
+              cpu: "0.1"
+              memory: 128M
+{{ end }}

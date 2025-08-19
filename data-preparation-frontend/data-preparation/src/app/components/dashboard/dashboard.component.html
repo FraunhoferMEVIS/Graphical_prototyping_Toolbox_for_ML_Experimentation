@@ -1,0 +1,58 @@
+<mat-toolbar class="toolbar">
+  <button
+    type="button"
+    matTooltip="Return to Workflow page"
+    (click)="goToWorkflowPage()"
+    mat-icon-button
+  >
+    <mat-icon aria-label="workflow page icon">arrow_back_ios</mat-icon>
+  </button>
+  <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+  </button>
+  <img class="image" src="assets/logos/maratusLogo.png" />
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="onMenuNewClick()">Clear Network</button>
+  </mat-menu>
+  <div>
+    <span>Maratus</span>
+    <div class="mat-small">Not for clinical use</div>
+  </div>
+  <span class="project-title">{{ getProjectName() }}</span>
+  <div class="action-container">
+    <button
+      mat-icon-button
+      matTooltip="Help"
+      (click)="onTaskDescriptionClick()"
+    >
+      <mat-icon>help</mat-icon>
+    </button>
+    <button
+      [disabled]="isLoading"
+      mat-button
+      class="action-button"
+      (click)="onRunAllClick()"
+    >
+      <mat-icon class="action-button-icon">play_arrow</mat-icon>
+      Run All
+    </button>
+  </div>
+</mat-toolbar>
+<div class="page-fancy-divider"></div>
+<mat-drawer-container class="sidenav-container">
+  <mat-drawer class="sidenav" mode="side" opened>
+    <div class="module-container mat-typography">
+      <app-modules-list-nested [modules]="networkService.modules$ | async" />
+    </div>
+  </mat-drawer>
+  <mat-drawer-content>
+    <app-canvas
+      [network]="networkService.network$ | async"
+      [modules]="networkService.modules$ | async"
+    ></app-canvas>
+    <div class="overlay" *ngIf="isLoading && delayExpired">
+      <h1>Running all modules ...</h1>
+      <mat-spinner></mat-spinner>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

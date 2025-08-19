@@ -1,0 +1,7 @@
+<div class="image-container mat-elevation-z8">
+  <div *ngIf="noData" class="label-no-data mat-h3">
+    No image available for this module
+  </div>
+  <img *ngIf="image != null" class="images" [src]="image" />
+  <mat-spinner *ngIf="loading" diameter="30" class="spinner"></mat-spinner>
+</div>

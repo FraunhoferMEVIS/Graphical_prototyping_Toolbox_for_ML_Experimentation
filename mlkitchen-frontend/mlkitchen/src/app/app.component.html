@@ -1,0 +1,5 @@
+<div class="page" [class.dark-theme]="isDark">
+  <app-topbar [toolTitle]="title" [projectId]="projectId | async"></app-topbar>
+  <div class="page-fancy-divider"></div>
+  <app-sidenav class="page-body"></app-sidenav>
+</div>

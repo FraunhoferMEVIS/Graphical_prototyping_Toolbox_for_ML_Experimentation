@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>
+  {{ getTitle(data.moduleInstance) }}
+</h1>
+
+<div>
+  <div [ngSwitch]="data.moduleInstance.blueprint.category">
+    <div *ngSwitchCase="'Visualize'">
+      <app-image-plot [moduleInstance]="data.moduleInstance" />
+    </div>
+    <div *ngSwitchDefault="">
+      <app-table [moduleInstance]="data.moduleInstance" />
+    </div>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button mat-raised-button matDialogClose cdkFocusInitial color="primary">
+      Close
+    </button>
+  </div>
+</div>

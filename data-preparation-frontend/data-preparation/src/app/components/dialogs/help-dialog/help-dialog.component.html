@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>{{ data.title }}</h2>
+<mat-dialog-content mat-typography>
+  <ul class="emoji-list">
+    <li>Get started with the <b>Table > Load CSV</b> module.</li>
+    <li>Export the data using the <b>Table > Export Data</b> module.</li>
+    <li>Reset by opening the Menu and selecting <b>Clear Network</b>.</li>
+    <li>Always save the config changes of a module, otherwise they are discarded.</li>
+  </ul>
+  <div [innerHTML]="data.description"></div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button
+    mat-raised-button
+    color="primary"
+    [mat-dialog-close]="true"
+    cdkFocusInitial
+  >
+    Got it
+  </button>
+</mat-dialog-actions>

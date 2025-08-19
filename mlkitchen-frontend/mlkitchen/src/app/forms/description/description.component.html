@@ -1,0 +1,72 @@
+<mat-toolbar>
+  <div [formGroup]="this.methodSelectionService.generalFormGroup">
+    <mat-button-toggle-group class="input" formControlName="mode">
+      <mat-button-toggle color="secondary" value="options"
+        ><mat-icon>store</mat-icon></mat-button-toggle
+      >
+      <mat-button-toggle value="selected"
+        ><mat-icon
+          [matBadge]="this.methodSelectionService.getNumberSelectedAlgorithms()"
+          >shopping_cart</mat-icon
+        ></mat-button-toggle
+      >
+    </mat-button-toggle-group>
+  </div>
+</mat-toolbar>
+<mat-card>
+  <mat-card-content>
+    <div [formGroup]="this.formGroup">
+      <mat-form-field appearance="outline">
+        <mat-label>Experiment Name</mat-label>
+        <input matInput formControlName="name" required />
+      </mat-form-field>
+      <br />
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <input matInput formControlName="description" />
+      </mat-form-field>
+      <br />
+      <mat-form-field appearance="outline">
+        <mat-label>Creator</mat-label>
+        <input matInput formControlName="creator" required />
+      </mat-form-field>
+      <br />
+      <div *ngIf="!this.methodSelectionService.projectName">
+        <h4>- WARNING: no meta information about project data -</h4>
+      </div>
+      <ng-container
+        *ngIf="
+          this.methodSelectionService.dataDescription$ | async as description
+        "
+      >
+        <h4>Prediction Target:</h4>
+        <mat-form-field>
+          <mat-label>Target Column</mat-label>
+          <mat-select
+            [formControl]="this.formGroup.controls.target"
+            (selectionChange)="
+              this.changeExperimentType($event.value, description.features)
+            "
+          >
+            <mat-option
+              *ngFor="let col of description.features"
+              [value]="col.name"
+              >{{ col.name }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+        <span *ngIf="this.getExperimentType(description)">
+          <h4>
+            Expected Experiment Type:
+            {{ this.getExperimentType(description) }}
+          </h4>
+        </span>
+        <mat-form-field appearance="outline">
+          <mat-label>Positive Class</mat-label>
+          <input matInput formControlName="positive_class" required />
+        </mat-form-field>
+      </ng-container>
+      <br />
+    </div>
+  </mat-card-content>
+</mat-card>

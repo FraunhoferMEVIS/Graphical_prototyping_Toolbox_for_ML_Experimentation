@@ -1,0 +1,36 @@
+<mat-toolbar>
+  <button
+    type="button"
+    matTooltip="Return to Workflow page"
+    (click)="goToWorkflowPage()"
+    mat-icon-button
+  >
+    <mat-icon aria-label="workflow page icon">arrow_back_ios</mat-icon>
+  </button>
+  <button
+    mat-icon-button
+    [matMenuTriggerFor]="menu"
+    aria-label="mlkitchen menu"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+  <!-- Menu with some example options -->
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>
+      <mat-icon>folder_open</mat-icon>
+      <span>New Experiment</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>science</mat-icon>
+      <span>Import from mlguide</span>
+    </button>
+  </mat-menu>
+  <img class="image" src="assets/mlkitchenLogo.png" />
+  <div class="px-2">
+    <h2>{{ toolTitle }}</h2>
+    <div class="mat-small">Not for clinical use</div>
+  </div>
+  <div class="spacer"></div>
+  <h2 class="project-title">{{ projectId }}</h2>
+  <div class="spacer"></div>
+</mat-toolbar>

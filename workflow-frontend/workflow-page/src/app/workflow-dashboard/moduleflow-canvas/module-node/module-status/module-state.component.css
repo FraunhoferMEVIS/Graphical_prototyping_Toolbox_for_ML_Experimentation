@@ -1,0 +1,27 @@
+.module-state {
+  @apply absolute bottom-0 left-0 flex flex-grow gap-1 justify-items-center;
+}
+
+.module-state-indicator {
+  @apply relative inline-block rounded-full w-5 h-5 m-1 align-baseline;
+}
+
+.module-state-label {
+  @apply text-sm align-middle relative leading-none my-auto float-left;
+}
+
+.executed {
+  @apply bg-green-600;
+}
+
+.not-executed {
+  @apply bg-gray-300;
+}
+
+.executing {
+  @apply bg-orange-500;
+}
+
+.error {
+  @apply bg-red-500;
+}

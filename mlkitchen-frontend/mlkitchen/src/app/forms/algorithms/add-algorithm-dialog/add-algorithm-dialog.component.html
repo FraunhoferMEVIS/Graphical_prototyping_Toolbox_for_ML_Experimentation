@@ -1,0 +1,158 @@
+<h1 matDialogTitle class="text">{{ this.data.name }}</h1>
+<div matDialogContent>
+  <br />
+  <p class="help">{{ this.data.help }}</p>
+  <br />
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title> Configure </mat-panel-title>
+    </mat-expansion-panel-header>
+    <span *ngFor="let p of this.notUsedAsHyperparameter(this.data.parameters)">
+      <span *ngIf="p.type === 'int' || p.type === 'float'">
+        <mat-form-field class="input" appearance="outline" floatLabel="always">
+          <mat-label>{{ p.name }}</mat-label>
+          <input matInput [(ngModel)]="p.value" type="number" />
+        </mat-form-field>
+      </span>
+      <span *ngIf="p.type === 'Enum' || p.type === 'Estimator'">
+        <mat-form-field class="input" appearance="outline" floatLabel="always">
+          <mat-label>{{ p.name }}</mat-label>
+          <mat-select [(value)]="p.value">
+            <mat-option *ngFor="let o of p.options" value="{{ o }}" default>{{
+              o
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </span>
+      <span
+        *ngIf="
+          p.type !== 'int' &&
+          p.type !== 'float' &&
+          p.type !== 'Enum' &&
+          p.type !== 'Estimator' &&
+          p.type !== 'bool'
+        "
+      >
+        <mat-form-field class="input" appearance="outline" floatLabel="always">
+          <mat-label>{{ p.name }}</mat-label>
+          <div *ngIf="p.type === 'list[str]'">
+            <input
+              matInput
+              [(ngModel)]="p.value"
+              placeholder="e.g id, age, hight"
+            />
+          </div>
+          <div *ngIf="p.type !== 'list[str]'">
+            <input matInput [(ngModel)]="p.value" />
+          </div>
+          <div *ngIf="p.mandatory && p.value === ''">
+            <mat-error> mandatory parameter </mat-error>
+          </div>
+        </mat-form-field>
+      </span>
+    </span>
+    <div>
+      <span class="toggle" *ngIf="this.data.all_numerical !== undefined">
+        <mat-label>all_numerical</mat-label>
+        <mat-slide-toggle
+          [checked]="this.data.all_numerical"
+          (change)="this.data.all_numerical = !this.data.all_numerical"
+          size="large"
+        >
+        </mat-slide-toggle>
+      </span>
+      <span class="toggle" *ngIf="this.data.all_categorical !== undefined">
+        <mat-label>all_categorical</mat-label>
+        <mat-slide-toggle
+          [checked]="this.data.all_categorical"
+          (change)="this.data.all_categorical = !this.data.all_categorical"
+          size="large"
+        >
+        </mat-slide-toggle>
+      </span>
+      <span
+        *ngFor="let p of this.notUsedAsHyperparameter(this.data.parameters)"
+      >
+        <span class="toggle" *ngIf="p.type === 'bool'">
+          <mat-label>{{ p.name }}</mat-label>
+          <mat-slide-toggle
+            [checked]="this.asBoolean(p.value)"
+            (change)="p.value = !p.value"
+            size="large"
+          >
+          </mat-slide-toggle>
+        </span>
+      </span>
+    </div>
+    <div
+      *ngIf="
+        this.stepHasTuning(this.data.step) && this.data.hyperParameterTuning
+      "
+    >
+      <mat-divider></mat-divider>
+      <br />
+      <p align="center">Hyperparameter Tuning</p>
+      <mat-form-field class="input" appearance="outline">
+        <mat-label>Tuning Method</mat-label>
+        <mat-select
+          [(value)]="this.data.hyperParameterTuning.selectedTuningMethod"
+        >
+          <mat-option
+            *ngFor="let t of this.tuningMethods"
+            value="{{ t }}"
+            default
+            >{{ t }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="input" appearance="outline">
+        <mat-label>Iterations</mat-label>
+        <input
+          matInput
+          [(ngModel)]="this.data.hyperParameterTuning.iterations"
+        />
+      </mat-form-field>
+      <mat-form-field class="input" appearance="outline">
+        <mat-label>Use For Parameter</mat-label>
+        <mat-select
+          multiple
+          [(value)]="this.data.hyperParameterTuning.parameters"
+        >
+          <mat-option
+            *ngFor="let param of this.getTunableParameters()"
+            [value]="param"
+            >{{ param.name }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+      <mat-divider></mat-divider>
+      <br />
+      <div
+        *ngFor="let tuningParam of this.data.hyperParameterTuning.parameters"
+      >
+        <mat-form-field class="input" appearance="outline">
+          <mat-label>Parameter</mat-label>
+          <input matInput [disabled]="true" value="{{ tuningParam.name }}" />
+        </mat-form-field>
+        <mat-form-field class="input" appearance="outline">
+          <mat-label>Range / List</mat-label>
+          <input
+            matInput
+            [(ngModel)]="tuningParam.value"
+            placeholder="e.g. 2-8 or 3,5,7"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-expansion-panel>
+</div>
+<mat-dialog-actions align="end">
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onConfirm()"
+    [disabled]="this.isInvalid()"
+  >
+    Add
+  </button>
+</mat-dialog-actions>

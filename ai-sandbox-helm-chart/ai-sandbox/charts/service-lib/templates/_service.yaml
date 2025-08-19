@@ -1,0 +1,21 @@
+{{- define "service-lib.service" }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.backend.name }}
+  {{ if .Values.global.namespace }}
+  namespace: {{ .Values.global.namespace }}
+  {{ end }}
+spec:
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      {{ if .Values.backend.costumeContainerPort }}
+      targetPort: {{.Values.backend.costumeContainerPort }}
+      {{ else }}
+      targetPort: 8000
+      {{ end }}
+  selector:
+    cds-app: {{ .Values.backend.name }}
+{{ end }}

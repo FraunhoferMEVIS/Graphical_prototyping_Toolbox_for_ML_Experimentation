@@ -1,0 +1,56 @@
+<mat-grid-list cols="5" rowHeight="40px">
+  <mat-grid-tile [colspan]="2">
+    <mat-divider style="width: 100%"></mat-divider>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <div class="text mat-typography">Selected {{ formName }}:</div>
+  </mat-grid-tile>
+
+  <mat-grid-tile [colspan]="2">
+    <mat-divider style="width: 100%"></mat-divider>
+  </mat-grid-tile>
+
+  <mat-grid-tile [rowspan]="6" *ngFor="let a of this.options">
+    <mat-card>
+      <mat-card-header
+        ><mat-card-title>{{ a.name || "Default" }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div *ngFor="let p of a.parameters">
+          {{ toMethodSetting(p.name, p.value) }}
+        </div>
+        <div *ngIf="a.hyperParameterTuning?.parameters?.length">
+          {{
+            toMethodSetting("iterations", a.hyperParameterTuning?.iterations)
+          }}
+          <br />
+          {{
+            toMethodSetting(
+              "tuning method",
+              a.hyperParameterTuning?.selectedTuningMethod
+            )
+          }}
+          <div *ngFor="let p of a.hyperParameterTuning?.parameters">
+            {{ toMethodSetting(p.name, p.value) }}
+          </div>
+        </div>
+        {{ toMethodSetting("ratio", a.ratio) }}
+        {{ toMethodSetting("all_numerical", a.all_numerical) }}
+        {{ toMethodSetting("all_categorical", a.all_categorical) }}
+        {{ toMethodSetting("threshold", a.threshold) }}
+        <div class="spacer"></div>
+      </mat-card-content>
+      <mat-card-footer>
+        <div class="spacer"></div>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="this.deselectOption(a)"
+        >
+          <mat-icon>remove</mat-icon>
+        </button>
+      </mat-card-footer>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>

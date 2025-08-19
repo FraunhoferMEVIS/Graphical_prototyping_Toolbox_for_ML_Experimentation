@@ -1,0 +1,59 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mlflow-runner-${{ JOB_NAME }}
+  namespace: ai-sandbox
+spec:
+  ttlSecondsAfterFinished: 21600
+  backoffLimit: 0
+  template:
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: node-role.kubernetes.io/control-plane
+                    operator: NotIn
+                    values:
+                      - "true"
+      imagePullSecrets:
+        - name: harborcred
+      restartPolicy: Never
+      containers:
+        - image: ${{ RUNNER_IMAGE_NAME }}:${{ RUNNER_IMAGE_TAG }}
+          name: mlflow-runner
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          resources:
+            limits:
+              cpu: "2"
+              memory: 8192M
+            requests:
+              cpu: "1"
+              memory: 1024M
+          env:
+            - name: PROJECT_ID
+              value: ${{ PROJECT_ID }}
+            - name: RECIPE
+              value: ${{ RECIPE }}
+            - name: DATA_PROVIDER_URL
+              value: ${{ DATA_PROVIDER_URL }}
+            - name: SPLIT_NUMBER
+              value: "${{ SPLIT_NUMBER }}"
+            - name: MLFLOW_RUN_NAME
+              value: ${{ MLFLOW_RUN_NAME }}
+          volumeMounts:
+            - mountPath: /gaia/
+              name: mlflow-runner-volume
+      volumes:
+        - name: mlflow-runner-volume
+          persistentVolumeClaim:
+            claimName: ai-sandbox-pvc

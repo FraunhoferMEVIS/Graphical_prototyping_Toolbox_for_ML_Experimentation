@@ -1,0 +1,60 @@
+{{- define "service-lib.ingress" }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    {{ if .Values.backend.disableRewriteTarget }}
+    {{ else }}
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    {{ end }}
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+  name: {{ .Values.backend.name }}
+  {{ if .Values.global.namespace }}
+  namespace: {{ .Values.global.namespace }}
+  {{ end }}
+spec:
+  ingressClassName: nginx
+  rules:
+    {{ if .Values.backend.costumeHost }}
+    - host: {{ .Values.backend.costumeHost }}
+      http:
+        paths:
+          - path: /
+            backend:
+              service:
+                name: {{ .Values.backend.name }}
+                port:
+                  number: 80
+            pathType: ImplementationSpecific
+    {{ else }}
+    - host: {{ .Values.global.host }}
+      http:
+        paths:
+          {{ if .Values.backend.costumeIngressPath }}
+          - path: {{.Values.backend.costumeIngressPath }}
+          {{ else }}
+          - path: /{{ .Values.backend.name }}(/|$)(.*) 
+          {{ end }}
+            backend:
+              service:
+                name: {{ .Values.backend.name }}
+                port:
+                  number: 80
+            pathType: ImplementationSpecific
+    {{ end }}
+  {{ if .Values.backend.costumeTlsSecret }}
+  tls:
+    - hosts:
+        - {{ .Values.backend.costumeHost }}
+      secretName: {{ .Values.backend.costumeTlsSecret }}
+  {{ else if .Values.backend.disableTls }}
+  {{ else if .Values.global.tlsSecret }}
+  tls:
+    - hosts:
+        - {{ .Values.global.host }}
+      secretName: {{ .Values.global.tlsSecret }}
+  {{ end }}
+{{ end }}

@@ -1,0 +1,21 @@
+{{- define "frontend-lib.service" }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.frontend.name }}
+  {{ if .Values.global.namespace }}
+  namespace: {{ .Values.global.namespace }}
+  {{ end }}
+spec:
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      {{ if .Values.frontend.costumeContainerPort }}
+      targetPort: {{.Values.frontend.costumeContainerPort }}
+      {{ else }}
+      targetPort: 80
+      {{ end }}
+  selector:
+    cds-app: {{ .Values.frontend.name }}
+{{ end }}

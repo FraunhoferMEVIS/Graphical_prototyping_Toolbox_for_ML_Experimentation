@@ -1,0 +1,22 @@
+<mat-stepper
+  orientation="vertical"
+  [linear]="isLinear"
+  [animationDuration]="'500'"
+  (selectionChange)="changedStep($event)"
+  #stepper
+>
+  <mat-step
+    [stepControl]="this.methodSelectionService.descriptionFormGroup"
+    errorMessage="Missing Information"
+  >
+    <ng-template matStepLabel>Description</ng-template>
+  </mat-step>
+
+  <mat-step
+    *ngFor="let step of this.methodSelectionService.steps"
+    [stepControl]="step.formGroup"
+    errorMessage="Missing Information"
+  >
+    <ng-template matStepLabel>{{ step.displayName }}</ng-template>
+  </mat-step>
+</mat-stepper>

@@ -1,0 +1,11 @@
+pandas==2.1.*
+requests==2.31.*
+pip-system-certs
+fastapi[all]==0.111.*
+orjson==3.10.6 #temp fix
+PyYAML==6.0.*
+numpy==1.26.*
+scikit-learn==1.4.*
+fastparquet==2024.5.*
+scikit-optimize==0.10.*
+pytest==8.3.*

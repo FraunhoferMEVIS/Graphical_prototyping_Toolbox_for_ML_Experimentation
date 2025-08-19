@@ -1,0 +1,21 @@
+{{- define "postgres-lib.service" }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.postgres.name }}
+  {{ if .Values.global.namespace }}
+  namespace: {{ .Values.global.namespace }}
+  {{ end }}
+spec:
+  ports:
+    - name: http
+      port: 5432
+      protocol: TCP
+      {{ if .Values.postgres.costumeContainerPort }}
+      targetPort: {{.Values.postgres.costumeContainerPort }}
+      {{ else }}
+      targetPort: 5432
+      {{ end }}
+  selector:
+    cds-app: {{ .Values.postgres.name }}
+{{ end }}

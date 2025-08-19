@@ -1,0 +1,11 @@
+.module-io {
+  @apply flex flex-col w-full;
+}
+
+.module-io-label {
+  @apply text-secondary w-full;
+}
+
+.module-io-select-wrap {
+  @apply p-1 pl-2;
+}

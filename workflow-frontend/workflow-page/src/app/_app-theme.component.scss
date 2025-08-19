@@ -1,0 +1,69 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@mixin color($theme) {
+  $color-config: mat.get-color-config($theme);
+  $foreground-palette: map.get($color-config, "foreground");
+  $background-palette: map.get($color-config, "background");
+  $primary-palette: map.get($color-config, "primary");
+
+  $background: mat.get-color-from-palette($background-palette, "background");
+
+  .page-header {
+    background-color: $background;
+  }
+
+  .page-body {
+    background-color: $background;
+  }
+
+  .page-footer {
+    background-color: mat.get-color-from-palette($background-palette, "card");
+  }
+
+  .menu-icon {
+    color: mat.get-color-from-palette($foreground-palette, "text");
+  }
+
+  .text-normal {
+    color: mat.get-color-from-palette($foreground-palette, "text");
+  }
+
+  svg path {
+    stroke: mat.get-color-from-palette($primary-palette, "lighter");
+  }
+
+  .module-node {
+    background-color: mat.get-color-from-palette($background-palette, "card");
+    border-color: mat.get-color-from-palette($primary-palette, "lighter");
+
+    // avoid hints for interaction possibilities that are not given in read-only mode
+    // &:hover {
+    //   border-color: mat.get-color-from-palette($primary-palette);
+    // }
+
+    // &.selected {
+    //   border-color: mat.get-color-from-palette($primary-palette);
+    // }
+  }
+
+  .module-node-title {
+    color: mat.get-color-from-palette($primary-palette, "text");
+  }
+
+  .module-node-subtitle {
+    color: mat.get-color-from-palette($foreground-palette, "text");
+  }
+
+  .module-state-label {
+    color: mat.get-color-from-palette($foreground-palette, "text");
+  }
+}
+
+@mixin theme($theme) {
+  $color-config: mat.get-color-config($theme);
+
+  @if $color-config !=null {
+    @include color($theme);
+  }
+}

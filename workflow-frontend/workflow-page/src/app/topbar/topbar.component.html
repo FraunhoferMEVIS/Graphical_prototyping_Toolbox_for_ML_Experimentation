@@ -1,0 +1,50 @@
+<mat-toolbar>
+  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Workflow menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="onOpenProject()">
+      <mat-icon>open_in_browser</mat-icon>
+      <span>Open Project</span>
+    </button>
+    <button mat-menu-item (click)="onManageProjects()">
+      <mat-icon>folder_managed</mat-icon>
+      <span>Manage Projects</span>
+    </button>
+    <button mat-menu-item [matMenuTriggerFor]="templates">
+      <mat-icon>description</mat-icon>
+      <span>Templates</span>
+    </button>
+  </mat-menu>
+  <mat-menu #templates="matMenu">
+    <button mat-menu-item (click)="onTemplateBasicClick()">Basic</button>
+  </mat-menu>
+  <img class="image" src="assets/logos/ki-fdz-trans.png" />
+  <div class="px-2">
+    <h2>Workflow</h2>
+    <div class="mat-small">Not for clinical use</div>
+  </div>
+  <div class="spacer"></div>
+  <h2 class="project-title">{{ dashboardService.selectedProject$ | async }}</h2>
+  <div class="spacer"></div>
+  <!-- <button matTooltip="Tool Info" mat-icon-button (click)="onInfoClick()">
+    <mat-icon>info</mat-icon>
+  </button> -->
+  <button mat-icon-button matTooltip="Theme" [matMenuTriggerFor]="theme" aria-label="Example icon-button with a menu">
+    <mat-icon>contrast</mat-icon>
+  </button>
+  <mat-menu #theme="matMenu">
+    <button mat-menu-item (click)="onThemeSelected('dark')">
+      <mat-icon>dark_mode</mat-icon>
+      <span>Dark</span>
+    </button>
+    <button mat-menu-item (click)="onThemeSelected('light')">
+      <mat-icon>light_mode</mat-icon>
+      <span>Light</span>
+    </button>
+    <button mat-menu-item (click)="onThemeSelected('sys')">
+      <mat-icon>computer</mat-icon>
+      <span>System Preference</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>

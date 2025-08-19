@@ -1,0 +1,30 @@
+mat-card {
+  width: calc(100% - 5px);
+  height: calc(100% - 5px);
+}
+
+mat-grid-list {
+  margin: 5px;
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+mat-card-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: auto;
+}
+
+mat-card-footer {
+  display: flex;
+  flex-direction: row;
+  padding: 5px;
+}
+
+.text {
+  padding-left: 10px;
+  padding-right: 10px;
+}

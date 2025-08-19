@@ -1,0 +1,74 @@
+{{- define "postgres-lib.deployment" }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    cds-app: {{ .Values.postgres.name }}
+    pod-svc: {{ .Values.postgres.name }}
+  name: {{ .Values.postgres.name }}
+  {{ if .Values.global.namespace }}
+  namespace: {{ .Values.global.namespace }}
+  {{ end }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      cds-app: {{ .Values.postgres.name }}
+  template:
+    metadata:
+      labels:
+        cds-app: {{ .Values.postgres.name }}
+        pod-svc: {{ .Values.postgres.name }}
+    spec:
+      securityContext:
+        runAsUser: 999
+        runAsGroup: 999
+        fsGroup: 999
+        {{- toYaml .Values.global.podSecurityContext | nindent 8 }}
+      nodeSelector:
+        node-role.kubernetes.io/control-plane: "true"
+      {{ if .Values.global.hostAliases }}
+      hostAliases:
+        {{- toYaml .Values.global.hostAliases | nindent 8 }}
+      {{ end }}
+      {{ if .Values.postgres.serviceAccount }}
+      serviceAccountName: {{.Values.postgres.serviceAccount }}
+      {{ end }}
+      {{ if .Values.global.dockerRegistry.imagePullSecret }}
+      imagePullSecrets:
+        - name: {{ .Values.global.dockerRegistry.imagePullSecret }}
+      {{ end }}
+      containers:
+        - image: {{ .Values.postgres.image.name }}:{{ .Values.postgres.image.tag }}
+          name: {{ .Values.postgres.name }}
+          securityContext:
+            {{- toYaml .Values.global.securityContext | nindent 12 }}
+          env: 
+            {{ range $key, $val := .Values.postgres.env }}
+            - name: {{ $key }}
+              value: "{{ $val }}"
+            {{ end }}
+          ports:
+            {{ if .Values.postgres.costumeContainerPort }}
+            - containerPort: {{.Values.postgres.costumeContainerPort }}
+            {{ else }}
+            - containerPort: 8000
+            {{ end }}
+          resources:
+            limits:
+              cpu: "2"
+              memory: 10240M
+            requests:
+              cpu: "0.2"
+              memory: 512M
+          {{ if .Values.postgres.storage.path }}
+          volumeMounts:
+            - mountPath: {{ .Values.postgres.storage.path }}
+              name: {{ .Values.postgres.name }}-volume
+      volumes:
+        - name: {{ .Values.postgres.name }}-volume
+          persistentVolumeClaim:
+            claimName: {{ .Values.global.storage.name }}
+      {{ end }}
+{{ end }}
+

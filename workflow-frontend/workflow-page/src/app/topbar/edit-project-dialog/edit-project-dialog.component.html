@@ -1,0 +1,28 @@
+<h1 mat-dialog-title>{{ data.title }}</h1>
+<div mat-dialog-content>
+  <p class="my-3">What should be the name of the project?</p>
+  <mat-form-field class="project-name">
+    <mat-label>Project name</mat-label>
+    <input
+      required
+      matInput
+      [pattern]="pattern"
+      maxlength="40"
+      [formControl]="projectName"
+    />
+    <mat-hint align="end">Allowed characters: {{ pattern }}</mat-hint>
+  </mat-form-field>
+  <mat-error>{{ getErrorMessage() }}</mat-error>
+  <mat-error *ngIf="error != ''">{{ error }}</mat-error>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close>Cancel</button>
+  <button
+    [disabled]="!projectName.valid || projectName.value == data.currentProject"
+    mat-raised-button
+    color="primary"
+    (click)="onSubmit()"
+  >
+    Save
+  </button>
+</div>

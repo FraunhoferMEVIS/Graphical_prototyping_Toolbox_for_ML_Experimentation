@@ -1,0 +1,99 @@
+<mat-drawer-container class="example-container" autosize>
+  <mat-drawer
+    #drawer
+    mode="side"
+    [opened]="
+      this.methodSelectionService.generalFormGroup.controls.mode.value ===
+      'options'
+    "
+  >
+    <app-stepper></app-stepper>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div
+      *ngIf="
+        this.methodSelectionService.generalFormGroup.controls.mode.value ===
+        'options'
+      "
+    >
+      <container-element [ngSwitch]="this.methodSelectionService.selectedStep">
+        <app-description
+          @blendInOut
+          *ngSwitchCase="0"
+          [formGroup]="this.methodSelectionService.descriptionFormGroup"
+        ></app-description>
+
+        <div *ngFor="let step of this.methodSelectionService.steps">
+          <app-algorithms
+            @blendInOut
+            *ngSwitchCase="step.id"
+            [step]="step.name"
+            [optionsObservable$]="step.options$"
+            [specificFormGroup]="step.formGroup"
+            [preAppliedFilters]="[
+              this.methodSelectionService.descriptionFormGroup.controls.type
+                .value!
+            ]"
+          ></app-algorithms>
+        </div>
+      </container-element>
+    </div>
+    <div
+      *ngIf="
+        this.methodSelectionService.generalFormGroup.controls.mode.value ===
+        'selected'
+      "
+    >
+      <mat-toolbar>
+        <div [formGroup]="this.methodSelectionService.generalFormGroup">
+          <mat-button-toggle-group class="input" formControlName="mode">
+            <mat-button-toggle color="secondary" value="options"
+              ><mat-icon>store</mat-icon></mat-button-toggle
+            >
+            <mat-button-toggle value="selected"
+              ><mat-icon
+                [matBadge]="
+                  this.methodSelectionService.getNumberSelectedAlgorithms()
+                "
+                >shopping_cart</mat-icon
+              ></mat-button-toggle
+            >
+          </mat-button-toggle-group>
+        </div>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="this.saveExperiment()"
+        >
+          Save Experiment
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="this.runExperiment()"
+        >
+          Run Experiment
+        </button>
+        <mat-progress-spinner
+          *ngIf="this.runStatusService.running"
+          class="progress"
+          color="primary"
+          [mode]="this.runStatusService.spinnerType()"
+          value="{{ this.runStatusService.progress }}"
+          diameter="50"
+        >
+        </mat-progress-spinner>
+      </mat-toolbar>
+      <app-selected-options
+        *ngFor="let step of this.methodSelectionService.steps"
+        @blendInOut
+        [formName]="step.displayName"
+        [options]="this.methodSelectionService.getSelectedOptions(step.name)"
+        (optionsEmitter)="
+          this.methodSelectionService.setSelectedOptions(step.name, $event)
+        "
+      >
+      </app-selected-options>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

@@ -1,0 +1,33 @@
+.image-container {
+  @apply flex flex-col;
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-bottom: 30px;
+
+  min-width: 30vw;
+  min-height: 30vh;
+  max-height: 80vh;
+  max-width: 90vw;
+
+  /* as long as plots are white we fix background to white as well */
+  background-color: white;
+}
+
+.images {
+  @apply m-auto;
+  /* reduce layout shift once image is loaded */
+  min-height: 30vh;
+  min-width: 30vw;
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.label-no-data {
+  margin: 20px 0px 20px 0px;
+  text-align: center;
+}
+
+.spinner {
+  margin: auto;
+}

@@ -1,0 +1,16 @@
+.emoji-list li::before {
+  content: '💡';
+  margin-right: 8px;
+}
+
+.emoji-list {
+  padding-left: 0px;
+}
+
+.emoji-list li::marker {
+  content: '';
+}
+
+.emoji-list li {
+  margin-bottom: 8px;
+}

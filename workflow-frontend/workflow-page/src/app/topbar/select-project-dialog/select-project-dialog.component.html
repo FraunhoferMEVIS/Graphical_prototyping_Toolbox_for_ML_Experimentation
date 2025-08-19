@@ -1,0 +1,28 @@
+<h1 mat-dialog-title>{{ data.title }}</h1>
+<div mat-dialog-content>
+  <mat-form-field class="select">
+    <mat-label>Selected Project</mat-label>
+    <mat-select
+      [(ngModel)]="selectedProject"
+      (ngModelChange)="onProjectSelected($event)"
+    >
+      <mat-option
+        *ngFor="let p of dashboardService.projects$ | async"
+        [value]="p"
+      >
+        {{ p }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close>Cancel</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onSubmit()"
+    cdkFocusInitial
+  >
+    Open
+  </button>
+</div>

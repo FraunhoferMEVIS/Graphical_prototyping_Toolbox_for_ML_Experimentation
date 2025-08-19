@@ -1,0 +1,19 @@
+pandas==2.1.*
+requests==2.31.*
+fastapi[all]==0.111.*
+orjson==3.10.6 #temp fix
+PyYAML==6.0.*
+numpy==1.26.*
+scikit-learn==1.4.*
+python-dotenv==1.0.*
+imbalanced-learn==0.12.*
+pyarrow==16.1.*
+fastparquet==2024.5.*
+scikit-optimize==0.10.*
+hyperopt==0.2.*
+sklearn-genetic-opt==0.10.*
+seaborn==0.13.*
+tensorflow==2.15.*
+pytest==8.3.*
+kubernetes==30.1.*
+yaml-replace==1.1.2

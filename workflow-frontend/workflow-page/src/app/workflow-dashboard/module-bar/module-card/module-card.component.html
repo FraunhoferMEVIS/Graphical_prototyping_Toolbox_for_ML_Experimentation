@@ -1,0 +1,10 @@
+<div class="module-card" title="{{module.description}}">
+    <div class="module-card-body">
+        <div class="module-card-title">{{module.title}}</div>
+        <div class="module-card-subtitle">{{module.subtitle}}</div>
+        <div class="module-card-description">{{module.description}}</div>
+    </div>
+    <div class="module-card-icon sm:shrink-0" *ngIf="module.icon.length > 0">
+        <img class="module-card-img" src={{module.icon}}>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+.category-item {
+  @apply h-full;
+}
+
+.category-icon {
+  @apply my-auto;
+  margin-right: 5px;
+  padding: 3px;
+
+  /* must stay white across themes due to colored background */
+  color: white;
+
+  /* TODO: extract these colors to theme or styles.css */
+  &.type-table {
+    @apply bg-pink-600;
+  }
+
+  &.type-filter {
+    @apply bg-indigo-600;
+  }
+
+  &.type-table-merge {
+    @apply bg-green-600;
+  }
+
+  &.type-preprocess {
+    @apply bg-orange-600;
+  }
+
+  &.type-visualize {
+    @apply bg-cyan-600;
+  }
+
+  &.type-aggregate-and-transform {
+    @apply bg-violet-600;
+  }
+}
+
+.category-title {
+  @apply my-auto;
+}
+
+.module-item-title {
+  @apply ml-5;
+}

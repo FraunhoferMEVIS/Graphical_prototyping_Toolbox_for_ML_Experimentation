@@ -1,0 +1,12 @@
+pandas>=0.24.2
+requests>=2.25.1
+fastapi[all]
+PyYAML>=6.0
+numpy>=1.23.3
+uvicorn>=0.20.0
+fastparquet
+seaborn
+sqlalchemy
+simpleeval
+filelock
+psycopg2_binary>=2.9.3

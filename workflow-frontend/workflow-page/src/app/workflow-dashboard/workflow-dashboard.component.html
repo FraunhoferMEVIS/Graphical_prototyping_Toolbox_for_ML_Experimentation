@@ -1,0 +1,8 @@
+<div class="dashboard">
+  <moduleflow-canvas *ngIf="projectSelected && !loading" [workflow]="this.dashboardService.workflow$ | async"
+    [project]="this.dashboardService.selectedProject$ | async" class="dashboard-canvas"></moduleflow-canvas>
+  <div class="center" *ngIf="!projectSelected && !loading">
+    <h3 class="text-normal">Open the menu to select or create a project.</h3>
+  </div>
+  <mat-spinner *ngIf="loading" mode="indeterminate" class="spinner" color="accent" diameter="70"></mat-spinner>
+</div>

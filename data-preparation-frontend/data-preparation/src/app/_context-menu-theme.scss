@@ -1,0 +1,92 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+
+@mixin color($theme) {
+  $color-config: mat.get-color-config($theme);
+  $primary-palette: map.get($color-config, 'primary');
+  $foreground-palette: map.get($color-config, 'foreground');
+  $background-palette: map.get($color-config, 'background');
+
+  $primary-color: mat.get-color-from-palette($primary-palette, 'default');
+  $text-color: mat.get-color-from-palette($foreground-palette, 'text');
+  $hover: mat.get-color-from-palette($background-palette, 'hover');
+  $background-color: mat.get-color-from-palette($background-palette, 'app-bar');
+  $context-color: $background-color;
+
+  [rete-context-menu] {
+    background-color: $context-color !important;
+    min-width: 300px !important;
+    padding: 0px !important;
+
+    .block:first-child input {
+      background-color: $context-color;
+
+      &:hover {
+        background-color: $hover !important;
+      }
+    }
+
+    .block:first-child input:focus {
+      background-color: $context-color;
+    }
+
+    .block:first-child:hover {
+      background-color: $hover !important;
+    }
+
+    .block {
+      background-color: $hover !important;
+      border-color: $text-color !important;
+      color: $text-color !important;
+      // by setting 100% child items will get higher width than parent
+      width: auto !important;
+    }
+
+    context-menu-search input.search {
+      background-color: $context-color !important;
+      color: $text-color !important;
+    }
+
+    context-menu-item.block {
+      background-color: $context-color !important;
+      color: $text-color;
+      padding: 8px !important;
+
+      &:hover {
+        background-color: $hover !important;
+      }
+    }
+
+    .subitems {
+      // solid background for transparent hover effect of block items
+      background-color: $context-color !important;
+    }
+  }
+}
+
+@mixin typography($theme) {
+  $typography-config: mat.get-typography-config($theme);
+
+  [rete-context-menu] {
+    .block:first-child input {
+      font-family: mat.font-family($typography-config);
+    }
+
+    .block {
+      font-family: mat.font-family($typography-config);
+    }
+  }
+}
+
+@mixin theme($theme) {
+  $color-config: mat.get-color-config($theme);
+  $typography-config: mat.get-typography-config($theme);
+
+  @if $color-config !=null {
+    @include color($theme);
+  }
+
+  @if $typography-config !=null {
+    @include typography($theme);
+  }
+}

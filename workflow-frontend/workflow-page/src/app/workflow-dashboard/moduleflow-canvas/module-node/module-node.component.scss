@@ -1,0 +1,93 @@
+@use "sass:math";
+@import "../vars";
+
+:host {
+  @apply relative border-4 rounded-xl p-1 pb-6 text-center flex-none block cursor-pointer;
+  box-sizing: border-box;
+  width: $node-width;
+  height: $node-height;
+  user-select: none;
+
+  &:hover {
+    @apply cursor-pointer;
+  }
+
+  &.selected {
+    @apply cursor-pointer;
+  }
+
+  .output {
+    text-align: right;
+  }
+
+  .input {
+    text-align: left;
+  }
+
+  .output-socket {
+    text-align: right;
+    margin-right: -1px;
+    display: inline-block;
+  }
+
+  .input-socket {
+    text-align: left;
+    margin-left: -1px;
+    display: inline-block;
+  }
+
+  .input-title,
+  .output-title {
+    vertical-align: middle;
+    color: text-secondary;
+    display: inline-block;
+    margin: $socket-margin;
+    line-height: $socket-size;
+  }
+
+  .input-control {
+    z-index: 1;
+    width: calc(100% - #{$socket-size + 2 * $socket-margin});
+    vertical-align: middle;
+    display: inline-block;
+  }
+
+  .control {
+    padding: $socket-margin math.div($socket-size, 2) + $socket-margin;
+  }
+}
+
+.module-info {
+  @apply mt-1.5;
+}
+
+.module-node-title {
+  @apply text-sm;
+}
+
+.module-node-subtitle {
+  @apply text-lg mt-1;
+}
+
+.module-node-icon {
+  @apply w-full flex flex-col items-center mb-2;
+}
+
+.module-node-img {
+  @apply h-16 w-full object-contain md:h-full md:w-16 py-2;
+}
+
+.module-open {
+  @apply flex flex-row pl-4;
+}
+
+.module-data {
+  @apply text-sm w-full;
+}
+
+.module-data-out-label {
+}
+
+.module-data-out-text {
+  @apply pl-2;
+}

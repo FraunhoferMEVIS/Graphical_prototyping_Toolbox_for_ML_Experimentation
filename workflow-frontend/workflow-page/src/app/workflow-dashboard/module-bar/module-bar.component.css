@@ -1,0 +1,7 @@
+.module-bar {
+  @apply bg-gray-300 p-4;
+}
+
+.module-bar-modules {
+  @apply min-w-full grid grid-cols-7 gap-3 items-start;
+}

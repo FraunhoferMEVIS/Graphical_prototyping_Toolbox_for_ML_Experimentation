@@ -1,0 +1,174 @@
+# Default values for ai-sandbox.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+global:
+  host: "<<your_domain>>"
+  namespace: "ai-sandbox"
+  dockerRegistry:
+    registry: "<<your_registry>>"
+    imagePullSecret: "harborcred"
+  storage:
+    name: "ai-sandbox-pvc"
+    size: "50Gi"
+  podSecurityContext:
+    { "seccompProfile": { "type": "RuntimeDefault" }, "runAsNonRoot": true }
+  securityContext:
+    { "capabilities": { "drop": ["ALL"] }, "allowPrivilegeEscalation": false }
+  hostAliases: ""
+  tlsSecret:
+
+mlkitchen:
+  frontend:
+    name: "mlkitchen"
+    image:
+      name: "mlkitchen-frontend"
+      tag: "1.0"
+    env:
+      BACKEND_BASE_PATH: "https://<<your_domain>>/mlkitchen-backend"
+      DATA_DESCRIPTOR_BASE_PATH: "https://<<your_domain>>/data-descriptor-api"
+      PROJECT_MANAGER_BASE_PATH: "https://<<your_domain>>/project-manager"
+      WORKFLOW_PAGE_BASE_PATH: "https://<<your_domain>>"
+
+  backend:
+    name: "mlkitchen-backend"
+    costumeContainerPort: "8080"
+    serviceAccount: "training-job-spawner"
+    image:
+      name: "mlkitchen-backend"
+      tag: "1.0"
+    env:
+      CLUSTER_TYPE: "kubernetes"
+      ROOT_PATH: "/mlkitchen-backend"
+      AISANDBOX_PORT: 8080
+      AISANDBOX_PROJECTS_FOLDER: "/gaia/projects"
+      TRACKING_URI: "http://mlflow-tracking.ai-sandbox.svc.cluster.local/mlflow-tracking"
+      DATA_DESCRIPTOR_URL: "http://data-descriptor-api.ai-sandbox.svc.cluster.local"
+      DATA_PROVIDER_URL: "http://data-provider-api.ai-sandbox.svc.cluster.local"
+      RUNNER_IMAGE_NAME: "<<your_registry>>/mlflow_runner"
+      RUNNER_IMAGE_TAG: "1.0"
+      IMAGE_TAG: "1.0"
+    storage:
+      path: "/gaia/"
+
+data-descriptor:
+  backend:
+    name: "data-descriptor-api"
+    costumeContainerPort: "8080"
+    image:
+      name: "mimic-data-descriptor"
+      tag: "1.0"
+    env:
+      ROOT_PATH: "/data-descriptor-api"
+      DATADESCRIPTOR_CONFIG_FILE: "/code/config/config.yaml"
+      DATADESCRIPTOR_INPUT_DATA_CONFIG: "/code/config/input_metadata_usecase_inhospitalmortality_48hours.yaml"
+      DATADESCRIPTOR_PORT: 8080
+      PROJECTS_FOLDER: "/gaia/projects"
+    storage:
+      path: "/gaia/"
+
+data-provider:
+  backend:
+    name: "data-provider-api"
+    costumeContainerPort: "8080"
+    image:
+      name: "mimic-data-ingest"
+      tag: "1.0"
+    env:
+      ROOT_PATH: "/data-provider-api"
+      Data_INGEST_PORT: 8080
+      AISANDBOX_PROJECTS_FOLDER: "/gaia/projects"
+      DATAINGEST_CONFIG_FILE: "configuration/config.yaml"
+    storage:
+      path: "/gaia/"
+
+workflow:
+  frontend:
+    name: "workflow"
+    runOnRoot: true
+    image:
+      name: "workflow-frontend"
+      tag: "1.0"
+    env:
+      CONQUERY_BASE_PATH: ""
+      MARATUS_BASE_PATH: "https://<<your_domain>>/data-preparation"
+      MLKITCHEN_BASE_PATH: "https://<<your_domain>>/mlkitchen"
+      MLFLOW_BASE_PATH: "https://<<your_domain>>/mlflow-tracking"
+      JUPYTER_BASE_PATH: ""
+      PROJECT_MANAGER_BASE_PATH: "https://<<your_domain>>/project-manager"
+      OAUTH2_BASE_PATH: "https://<<your_domain>>/oauth2"
+
+data-preparation:
+  frontend:
+    name: "data-preparation"
+    image:
+      name: "data-preparation-frontend"
+      tag: "1.0"
+    env:
+      PROJECT_MANAGER_BASE_PATH: "https://<<your_domain>>/project-manager"
+      DATA_PREPARATION_BASE_PATH: "https://<<your_domain>>/data-preparation-api"
+      WORKFLOW_PAGE_BASE_PATH: "https://<<your_domain>>"
+
+  backend:
+    name: "data-preparation-api"
+    image:
+      name: "data-preparation"
+      tag: "1.0"
+    env:
+      DATA_PREPROCESSING_PORT: "8000"
+      DATA_PREPARATION_PROJECTS_FOLDER: "/gaia/projects"
+      DATA_PREPARATION_CSV_REPO: "/gaia/csv_datasets"
+      ROOT_PATH: "/data-preparation-api"
+      POSTGRES_DB: "mimic"
+      POSTGRES_USER: "postgres"
+      # TODO: access secret via vault or k8s secrets store
+      POSTGRES_PASSWORD: "my-secret-pw"
+      AISANDBOX_URL: "http://mlkitchen-backend.ai-sandbox.svc.cluster.local"
+      DATA_DESCRIPTOR_URL: "http://data-descriptor-api.ai-sandbox.svc.cluster.local"
+    storage:
+      path: "/gaia/"
+
+project-manager:
+  backend:
+    name: "project-manager"
+    costumeContainerPort: "80"
+    image:
+      name: "project-manager"
+      tag: "1.0"
+    storage:
+      path: "/gaia/"
+    env:
+      API_VERSION: "1.0.1"
+      PROJECTS_FOLDER: "/gaia/projects"
+      ROOT_PATH: "/project-manager"
+      SANDBOX_API: "http://mlkitchen-backend.ai-sandbox.svc.cluster.local"
+
+mlflow-tracking:
+  backend:
+    name: "mlflow-tracking"
+    costumeContainerPort: "5000"
+    image:
+      name: "mlflow-tracking"
+      tag: "1.0"
+    storage:
+      path: "/gaia/"
+    env:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "kifdz"
+      POSTGRES_DB: "mlflow_db"
+      MLFLOW_HOST: "0.0.0.0"
+      SCRIPT_NAME: "/mlflow-tracking"
+    disableRewriteTarget: true
+
+  postgres:
+    name: "mlflow-postgres"
+    image:
+      name: "postgres"
+      tag: "16.2"
+    storage:
+      path: "/pv/"
+    env:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "kifdz"
+      POSTGRES_DB: "mlflow_db"
+      PGDATA: "/pv/db"

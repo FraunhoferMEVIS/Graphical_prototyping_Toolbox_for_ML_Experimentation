@@ -1,0 +1,25 @@
+.page {
+  @apply min-w-full min-h-screen;
+  @apply flex flex-col;
+}
+
+.page-body-inner,
+.page-footer-inner {
+  @apply w-full mx-auto shrink-0;
+}
+
+.page-footer-inner {
+  @apply p-2;
+}
+
+.page-body {
+  @apply flex w-full flex-grow;
+}
+
+.page-body-inner {
+  @apply min-h-full;
+}
+
+.page-fancy-divider {
+  @apply h-1.5 bg-gradient-to-r from-emerald-100 via-emerald-500 to-slate-500;
+}

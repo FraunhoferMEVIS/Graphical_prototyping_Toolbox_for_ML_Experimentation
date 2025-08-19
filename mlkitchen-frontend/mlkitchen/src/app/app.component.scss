@@ -1,0 +1,21 @@
+$toolbar-size: 64px;
+$divider-size: 6px;
+
+.toolbar {
+  height: $toolbar-size;
+  position: sticky;
+}
+
+.page-fancy-divider {
+  @apply bg-gradient-to-r from-emerald-100 via-emerald-500 to-slate-500;
+  height: $divider-size;
+}
+
+.page {
+  @apply w-full h-full flex flex-col;
+}
+
+.page-body {
+  @apply w-full;
+  height: calc(100vh - $toolbar-size - $divider-size);
+}

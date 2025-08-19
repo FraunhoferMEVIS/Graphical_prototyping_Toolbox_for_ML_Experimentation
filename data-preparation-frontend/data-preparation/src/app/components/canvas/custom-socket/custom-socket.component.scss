@@ -1,0 +1,11 @@
+@import "../vars";
+
+:host {
+  @apply rounded-full inline-block cursor-pointer bg-white hover:bg-gray-200;
+  border: 3px solid grey;
+  width: $socket-size;
+  height: $socket-size;
+  vertical-align: middle;
+  z-index: 2;
+  box-sizing: border-box;
+}

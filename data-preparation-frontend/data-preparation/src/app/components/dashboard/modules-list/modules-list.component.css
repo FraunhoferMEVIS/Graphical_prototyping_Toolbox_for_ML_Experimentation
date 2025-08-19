@@ -1,0 +1,7 @@
+.title {
+  @apply text-left px-2 pt-5;
+}
+
+.icon {
+  @apply my-auto mr-1;
+}

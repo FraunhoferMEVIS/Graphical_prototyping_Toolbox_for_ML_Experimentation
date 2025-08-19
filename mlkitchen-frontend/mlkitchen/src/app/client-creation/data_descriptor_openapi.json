@@ -1,0 +1,378 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Data Descriptor",
+    "description": "Data Descriptor for Tabular Database",
+    "contact": {
+      "name": "Elham Taghizadeh",
+      "email": "kifdz@mevis.fraunhofer.de"
+    },
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/config/{project_id}": {
+      "get": {
+        "tags": ["Configuration"],
+        "summary": "Get Current Metadata",
+        "description": "Returns the current metadata info of the project.",
+        "operationId": "get_current_metadata_config__project_id__get",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Project Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Get Current Metadata Config  Project Id  Get"
+                }
+              }
+            }
+          },
+          "404": { "description": "Not found" },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Configuration"],
+        "summary": "Set Current Metadata",
+        "description": "Change the current metadata of the project.",
+        "operationId": "set_current_metadata_config__project_id__post",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Project Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/MetadataModel" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "404": { "description": "Not found" },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/features/{project_id}/list": {
+      "get": {
+        "tags": ["Features"],
+        "summary": "List Of Project Features",
+        "description": "Get the list of features of a specific project",
+        "operationId": "list_of_project_features_features__project_id__list_get",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Project Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "404": { "description": "Not found" },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/features/{project_id}/get_feature_type": {
+      "get": {
+        "tags": ["Features"],
+        "summary": "Get Type",
+        "description": "Getting type of the requested feature",
+        "operationId": "get_type_features__project_id__get_feature_type_get",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Project Id" }
+          },
+          {
+            "name": "feature",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "title": "Feature" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "404": { "description": "Not found" },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/features/{project_id}/get_target_column": {
+      "get": {
+        "tags": ["Features"],
+        "summary": "Get Target Column",
+        "description": "Getting type of the requested feature",
+        "operationId": "get_target_column_features__project_id__get_target_column_get",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Project Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "404": { "description": "Not found" },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/scripts/list": {
+      "get": {
+        "tags": ["Modules"],
+        "summary": "List Of New Features Modules",
+        "description": "Get the list of features",
+        "operationId": "list_of_new_features_modules_scripts_list_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "404": { "description": "Not found" }
+        }
+      }
+    },
+    "/scripts/new_module": {
+      "post": {
+        "tags": ["Modules"],
+        "summary": "Define New Module",
+        "description": "Defining a new function to compute a new feature,\nbased on existing ones",
+        "operationId": "define_new_module_scripts_new_module_post",
+        "parameters": [
+          {
+            "name": "script",
+            "in": "query",
+            "required": true,
+            "schema": { "title": "Script" }
+          },
+          {
+            "name": "parameters",
+            "in": "query",
+            "required": true,
+            "schema": { "title": "Parameters" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "404": { "description": "Not found" },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "summary": "Redirect",
+        "description": "redirect to the /docs",
+        "operationId": "redirect__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "DataTypes": {
+        "type": "string",
+        "enum": ["tabular"],
+        "const": "tabular",
+        "title": "DataTypes",
+        "description": "supported data types"
+      },
+      "Feature": {
+        "properties": {
+          "name": { "type": "string", "title": "Name" },
+          "displayName": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Displayname"
+          },
+          "type": { "$ref": "#/components/schemas/FeatureTypes" },
+          "loader": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Loader"
+          },
+          "min": {
+            "anyOf": [
+              { "type": "integer" },
+              { "type": "number" },
+              { "type": "null" }
+            ],
+            "title": "Min"
+          },
+          "max": {
+            "anyOf": [
+              { "type": "integer" },
+              { "type": "number" },
+              { "type": "null" }
+            ],
+            "title": "Max"
+          },
+          "unique": {
+            "anyOf": [{ "type": "boolean" }, { "type": "null" }],
+            "title": "Unique"
+          }
+        },
+        "type": "object",
+        "required": ["name", "type"],
+        "title": "Feature",
+        "description": "Feature Configuration\nWhat are the best descriptors of a Feature"
+      },
+      "FeatureTypes": {
+        "type": "string",
+        "enum": [
+          "key",
+          "numerical",
+          "categorical",
+          "time",
+          "date",
+          "interval",
+          "text",
+          "image",
+          "signal",
+          "other"
+        ],
+        "title": "FeatureTypes",
+        "description": "Different type of features that we support"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": { "$ref": "#/components/schemas/ValidationError" },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "MetadataModel": {
+        "properties": {
+          "data_type": {
+            "items": { "$ref": "#/components/schemas/DataTypes" },
+            "type": "array",
+            "title": "Data Type"
+          },
+          "keys": {
+            "items": { "type": "string" },
+            "type": "array",
+            "title": "Keys"
+          },
+          "target": { "type": "string", "title": "Target" },
+          "features": {
+            "items": { "$ref": "#/components/schemas/Feature" },
+            "type": "array",
+            "title": "Features"
+          }
+        },
+        "type": "object",
+        "required": ["data_type", "keys", "target", "features"],
+        "title": "MetadataModel",
+        "description": "The model for metadata "
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": { "anyOf": [{ "type": "string" }, { "type": "integer" }] },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": { "type": "string", "title": "Message" },
+          "type": { "type": "string", "title": "Error Type" }
+        },
+        "type": "object",
+        "required": ["loc", "msg", "type"],
+        "title": "ValidationError"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Features",
+      "description": "Set up and edit an mlflow recipe project."
+    },
+    {
+      "name": "Modules",
+      "description": "Retrieve the modules to load features,                find existing functions to define new features, ..."
+    }
+  ]
+}

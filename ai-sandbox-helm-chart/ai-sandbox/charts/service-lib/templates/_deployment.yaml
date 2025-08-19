@@ -1,0 +1,71 @@
+{{- define "service-lib.deployment" }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    cds-app: {{ .Values.backend.name }}
+    pod-svc: {{ .Values.backend.name }}
+  name: {{ .Values.backend.name }}
+  {{ if .Values.global.namespace }}
+  namespace: {{ .Values.global.namespace }}
+  {{ end }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      cds-app: {{ .Values.backend.name }}
+  template:
+    metadata:
+      labels:
+        cds-app: {{ .Values.backend.name }}
+        pod-svc: {{ .Values.backend.name }}
+    spec:
+      securityContext:
+        {{- toYaml .Values.global.podSecurityContext | nindent 8 }}
+      nodeSelector:
+        node-role.kubernetes.io/control-plane: "true"
+      {{ if .Values.global.hostAliases }}
+      hostAliases:
+        {{- toYaml .Values.global.hostAliases | nindent 8 }}
+      {{ end }}
+      {{ if .Values.backend.serviceAccount }}
+      serviceAccountName: {{.Values.backend.serviceAccount }}
+      {{ end }}
+      {{ if .Values.global.dockerRegistry.imagePullSecret }}
+      imagePullSecrets:
+        - name: {{ .Values.global.dockerRegistry.imagePullSecret }}
+      {{ end }}
+      containers:
+        - image: {{ .Values.global.dockerRegistry.registry }}/{{ .Values.backend.image.name }}:{{ .Values.backend.image.tag }}
+          name: {{ .Values.backend.name }}
+          securityContext:
+            {{- toYaml .Values.global.securityContext | nindent 12 }}
+          env: 
+            {{ range $key, $val := .Values.backend.env }}
+            - name: {{ $key }}
+              value: "{{ $val }}"
+            {{ end }}
+          ports:
+            {{ if .Values.backend.costumeContainerPort }}
+            - containerPort: {{.Values.backend.costumeContainerPort }}
+            {{ else }}
+            - containerPort: 8000
+            {{ end }}
+          resources:
+            limits:
+              cpu: "2"
+              memory: 10240M
+            requests:
+              cpu: "0.2"
+              memory: 512M
+          {{ if .Values.backend.storage.path }}
+          volumeMounts:
+            - mountPath: {{ .Values.backend.storage.path }}
+              name: {{ .Values.backend.name }}-volume
+      volumes:
+        - name: {{ .Values.backend.name }}-volume
+          persistentVolumeClaim:
+            claimName: {{ .Values.global.storage.name }}
+      {{ end }}
+{{ end }}
+

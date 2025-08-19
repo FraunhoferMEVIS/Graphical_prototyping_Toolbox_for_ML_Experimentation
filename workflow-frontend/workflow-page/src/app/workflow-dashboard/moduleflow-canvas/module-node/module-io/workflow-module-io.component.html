@@ -1,0 +1,13 @@
+<div class="module-io">
+  <!-- <label class="module-io-label" for="dataSelector">import result</label> -->
+  <div class="module-io-select-wrap">
+    <select class="module-io-select" name="dataSelector">
+      <option>No input</option>
+      <optgroup label="Results">
+        <option *ngFor="let io of ioList">
+          {{ io.meta.label }}
+        </option>
+      </optgroup>
+    </select>
+  </div>
+</div>

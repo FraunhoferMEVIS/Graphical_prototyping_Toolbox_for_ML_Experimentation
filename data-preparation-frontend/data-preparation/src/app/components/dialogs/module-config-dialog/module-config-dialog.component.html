@@ -1,0 +1,88 @@
+<h1
+  mat-dialog-title
+>
+  Configuration of {{ data.moduleInstance.blueprint.title }}
+</h1>
+
+<div mat-dialog-content>
+  <p class="pb-4">
+    Prepare the module for execution by configuring the parameters below.
+  </p>
+
+  <form [formGroup]="form">
+    <div *ngFor="let param of parameters">
+      <div *ngIf="param.type != 'boolean'">
+        <!-- let user enter multiple values -->
+        <app-chip-list-control
+          *ngIf="param.allowedValues == null && param.multipleValues"
+          [control]="getFormControl(param.id)"
+          [values]="castValueToArray(param)"
+          [error]="getInputErrorMsg(form.controls[param.id], param)"
+          [required]="param.required"
+          [label]="param.name"
+          [description]="param.description"
+          [type]="getInputType(param)"
+        ></app-chip-list-control>
+        <mat-form-field
+          class="form-field"
+          *ngIf="!(param.allowedValues == null && param.multipleValues)"
+        >
+          <mat-label [attr.for]="param.id">{{ param.name }}</mat-label>
+          <!-- let user select pre-defined options -->
+          <mat-select
+            *ngIf="param.allowedValues != null"
+            [id]="param.id"
+            [formControlName]="param.id"
+            [multiple]="param.multipleValues"
+            [required]="param.required"
+          >
+            <mat-option *ngFor="let c of param.allowedValues" [value]="c">
+              {{ c }}
+            </mat-option>
+          </mat-select>
+          <!-- let user input free text -->
+          <input
+            *ngIf="param.allowedValues == null"
+            [type]="getInputType(param)"
+            [id]="param.id"
+            [formControlName]="param.id"
+            [required]="param.required"
+            matInput
+          />
+          <mat-icon
+            *ngIf="hasDescription(param)"
+            [matTooltip]="param.description"
+            matSuffix
+            >info</mat-icon
+          >
+          <mat-error *ngIf="!form.controls[param.id].valid">{{
+            getInputErrorMsg(form.controls[param.id], param)
+          }}</mat-error>
+        </mat-form-field>
+      </div>
+      <mat-checkbox
+        class="checkbox"
+        *ngIf="param.type == 'boolean'"
+        [id]="param.id"
+        [required]="param.required"
+        [formControlName]="param.id"
+      >
+        {{ param.name }}
+      </mat-checkbox>
+    </div>
+  </form>
+  <mat-error>{{ error }}</mat-error>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-raised-button matDialogClose>Cancel</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onSubmit()"
+    type="submit"
+    [disabled]="!form.valid"
+  >
+    Save
+  </button>
+</div>

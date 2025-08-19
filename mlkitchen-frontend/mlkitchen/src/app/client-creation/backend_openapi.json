@@ -1,0 +1,1667 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "AI Sandbox",
+    "description": "KI-FDZ AI Sandbox Core Application",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/recipe/all": {
+      "post": {
+        "tags": [
+          "Recipe"
+        ],
+        "summary": "Post Config",
+        "operationId": "post_config_recipe_all_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_post_config_recipe_all_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recipe/{project_id}/target": {
+      "get": {
+        "tags": [
+          "Recipe"
+        ],
+        "summary": "Get Target Column",
+        "operationId": "get_target_column_recipe__project_id__target_get",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TargetConfig"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recipe/step/add": {
+      "put": {
+        "tags": [
+          "Recipe"
+        ],
+        "summary": "Set Step",
+        "operationId": "set_step_recipe_step_add_put",
+        "parameters": [
+          {
+            "name": "step",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Steps"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_set_step_recipe_step_add_put"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recipe/step/delete": {
+      "delete": {
+        "tags": [
+          "Recipe"
+        ],
+        "summary": "Delete Step",
+        "operationId": "delete_step_recipe_step_delete_delete",
+        "parameters": [
+          {
+            "name": "step",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Steps"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Project"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recipe/get_config": {
+      "get": {
+        "tags": [
+          "Recipe"
+        ],
+        "summary": "Get Config",
+        "operationId": "get_config_recipe_get_config_get",
+        "parameters": [
+          {
+            "name": "project_name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Name"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recipe/get_missing_steps": {
+      "get": {
+        "tags": [
+          "Recipe"
+        ],
+        "summary": "Get Missing Mandatory Steps",
+        "operationId": "get_missing_mandatory_steps_recipe_get_missing_steps_get",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Project"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/data/{project_id}/file": {
+      "post": {
+        "tags": [
+          "Data"
+        ],
+        "summary": "Receive Data File",
+        "description": "Uploads parquet file for a project with project_id, \nvalidating the file format and managing success or error responses accordingly.",
+        "operationId": "receive_data_file_data__project_id__file_post",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_receive_data_file_data__project_id__file_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/methods/{step}": {
+      "get": {
+        "tags": [
+          "Methods"
+        ],
+        "summary": "Get Implemented Methods",
+        "description": "Returns the list of implemented methods in a given step.\n:step: is the name of step in the pipeline\n:filters: is a list of flags to apply as a filter.",
+        "operationId": "get_implemented_methods_methods__step__get",
+        "parameters": [
+          {
+            "name": "step",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Steps"
+            }
+          },
+          {
+            "name": "filters",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Filters"
+              },
+              "title": "Filters"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/methods/step_filters/{step}": {
+      "get": {
+        "tags": [
+          "Methods"
+        ],
+        "summary": "Get Filters Of Step",
+        "description": "Returns the list of possible filters for a given step.\n:step: is the name of step in the pipeline",
+        "operationId": "get_filters_of_step_methods_step_filters__step__get",
+        "parameters": [
+          {
+            "name": "step",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Steps"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/methods/{step}/{alg}": {
+      "get": {
+        "tags": [
+          "Methods"
+        ],
+        "summary": "Get Method Metadata",
+        "description": "call to get the metadata (including the help and the input parameters)\nfor the requested algorithm in the given step.\n:step: The name of the step\n:alg: name of the algorithm\n:raises HTTPException: if the step is not defined or alg is not\nimplemented",
+        "operationId": "get_method_metadata_methods__step___alg__get",
+        "parameters": [
+          {
+            "name": "step",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Steps"
+            }
+          },
+          {
+            "name": "alg",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Alg"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/execute/all": {
+      "post": {
+        "tags": [
+          "Execute"
+        ],
+        "summary": "Run All",
+        "description": "Runs the whole recipe. All dfined steps are going to run.",
+        "operationId": "run_all_execute_all_post",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Name"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "title": "Response Run All Execute All Post"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/execute/step": {
+      "post": {
+        "tags": [
+          "Execute"
+        ],
+        "summary": "Run Step",
+        "description": "It's going to run only the specific step.\nThe previous steps runs should have been finished successfully.\ninput: the step which can be selected from the drop down list.",
+        "operationId": "run_step_execute_step_post",
+        "parameters": [
+          {
+            "name": "step",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Steps"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Project"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/execute/status": {
+      "get": {
+        "tags": [
+          "Execute"
+        ],
+        "summary": "Get Status",
+        "description": "Get the job's status",
+        "operationId": "get_status_execute_status_get",
+        "parameters": [
+          {
+            "name": "project_name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Name"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/results/": {
+      "get": {
+        "tags": [
+          "Results"
+        ],
+        "summary": "Results As Json",
+        "description": "Gets the results as a json structure",
+        "operationId": "results_as_json_results__get",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Project"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/results/report": {
+      "get": {
+        "tags": [
+          "Results"
+        ],
+        "summary": "Results As Pdf",
+        "description": "Gets the report as a pdf file",
+        "operationId": "results_as_pdf_results_report_get",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Project"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "summary": "Redirect",
+        "operationId": "redirect__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AlgorithmConfig": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "library": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Library"
+          },
+          "language": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ProgrammingLanguages"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "parameters": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parameters"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "AlgorithmConfig"
+      },
+      "Body_post_config_recipe_all_post": {
+        "properties": {
+          "project": {
+            "$ref": "#/components/schemas/Project"
+          },
+          "config": {
+            "$ref": "#/components/schemas/RecipeConfig"
+          }
+        },
+        "type": "object",
+        "required": [
+          "project",
+          "config"
+        ],
+        "title": "Body_post_config_recipe_all_post"
+      },
+      "Body_receive_data_file_data__project_id__file_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "title": "File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_receive_data_file_data__project_id__file_post"
+      },
+      "Body_set_step_recipe_step_add_put": {
+        "properties": {
+          "project": {
+            "$ref": "#/components/schemas/Project"
+          },
+          "algs": {
+            "$ref": "#/components/schemas/StepConfig"
+          }
+        },
+        "type": "object",
+        "required": [
+          "project",
+          "algs"
+        ],
+        "title": "Body_set_step_recipe_step_add_put"
+      },
+      "ColumnTransformerConfig": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "library": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Library"
+          },
+          "language": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ProgrammingLanguages"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "parameters": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parameters"
+          },
+          "column_name": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Column Name"
+          },
+          "all_numerical": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "All Numerical"
+          },
+          "all_categorical": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "All Categorical"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "ColumnTransformerConfig",
+        "description": "if column name is given, the method will be applied only to the specified\ncolumn name. Otherwise, if \"all_numerical\" is equal to True, the method\nwill be applied to all numerical columns, and/or if \"all_categorical\" is\nequal to True, the method will be applie to all categorical columns of\nthe dataset. If none of these inputs are set, the method is applied to\nall columns, except for Identifier columns, e.g. subject_id."
+      },
+      "DataTypes": {
+        "type": "string",
+        "enum": [
+          "numerical",
+          "categorical"
+        ],
+        "title": "DataTypes",
+        "description": "Different types of input columns"
+      },
+      "Filters": {
+        "type": "string",
+        "enum": [
+          "plot",
+          "timeseries_classification",
+          "estimator_based",
+          "numerical",
+          "categorical",
+          "grid",
+          "oversampling",
+          "classification",
+          "statistical_based",
+          "over_undersampling",
+          "undersampling",
+          "score_for_classification",
+          "regression",
+          "score_for_regression"
+        ],
+        "title": "Filters",
+        "description": "list of all possible filters"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "MetricsConfig": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "library": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Library"
+          },
+          "language": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ProgrammingLanguages"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "parameters": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parameters"
+          },
+          "threshold": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Threshold"
+          },
+          "greater_is_better": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Greater Is Better"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "MetricsConfig"
+      },
+      "NewFeatureConfig": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "library": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Library"
+          },
+          "language": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ProgrammingLanguages"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "parameters": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parameters"
+          },
+          "column_name": {
+            "type": "string",
+            "title": "Column Name"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "column_name"
+        ],
+        "title": "NewFeatureConfig"
+      },
+      "ProgrammingLanguages": {
+        "type": "string",
+        "enum": [
+          "python",
+          "r"
+        ],
+        "title": "ProgrammingLanguages"
+      },
+      "Project": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "Project",
+        "description": "Project class to generate a project for mlflow",
+        "examples": [
+          {
+            "name": "sample_project"
+          }
+        ]
+      },
+      "RecipeConfig": {
+        "properties": {
+          "username": {
+            "type": "string",
+            "title": "Username"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "task": {
+            "$ref": "#/components/schemas/TaskTypes"
+          },
+          "target_col": {
+            "type": "string",
+            "title": "Target Col"
+          },
+          "positive_class": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Positive Class"
+          },
+          "split": {
+            "$ref": "#/components/schemas/SplitConfig"
+          },
+          "imputation": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/ColumnTransformerConfig"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Imputation"
+          },
+          "encoders": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/ColumnTransformerConfig"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Encoders"
+          },
+          "feature_selection": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AlgorithmConfig"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "metrics": {
+            "items": {
+              "$ref": "#/components/schemas/MetricsConfig"
+            },
+            "type": "array",
+            "title": "Metrics"
+          },
+          "primaryMetric": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              }
+            ],
+            "title": "Primarymetric"
+          },
+          "estimator": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AlgorithmConfig"
+              },
+              {
+                "items": {
+                  "$ref": "#/components/schemas/AlgorithmConfig"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Estimator"
+          },
+          "sampling": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SamplingConfig"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "new_feature": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/NewFeatureConfig"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "New Feature"
+          }
+        },
+        "type": "object",
+        "required": [
+          "username",
+          "task",
+          "target_col",
+          "split",
+          "metrics",
+          "primaryMetric"
+        ],
+        "title": "RecipeConfig",
+        "description": "The configuration structure of the recipe that should be\ndefined as the input.",
+        "examples": [
+          {
+            "description": "Predicting in-hospital expiration based on SAPSS-II",
+            "encoders": [
+              {
+                "all_categorical": true,
+                "name": "OneHotEncoder",
+                "parameters": {
+                  "drop": "if_binary",
+                  "handle_unknown": "ignore",
+                  "sparse_output": false
+                }
+              },
+              {
+                "all_numerical": true,
+                "name": "StandardScaler"
+              }
+            ],
+            "estimator": [
+              {
+                "language": "python",
+                "library": "sklearn",
+                "name": "RandomForestClassifier",
+                "parameters": {
+                  "hyper_parameter_tuning": "RandomizedSearchCV",
+                  "search_space": {
+                    "max_depth": {
+                      "function": "randint",
+                      "parameters": {
+                        "high": 15,
+                        "low": 5
+                      }
+                    },
+                    "n_estimators": {
+                      "values": [
+                        50,
+                        100,
+                        200,
+                        400,
+                        800
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "language": "python",
+                "library": "sklearn",
+                "name": "LogisticRegression"
+              }
+            ],
+            "feature_selection": {
+              "name": "SelectKBest",
+              "parameters": {
+                "k": 25,
+                "score_func": "mutual_info_regression"
+              }
+            },
+            "imputation": [
+              {
+                "all_numerical": true,
+                "name": "Median"
+              }
+            ],
+            "metrics": [
+              {
+                "name": "balanced_accuracy_score",
+                "threshold": 0.5
+              },
+              {
+                "name": "f1_score",
+                "threshold": 0.5
+              }
+            ],
+            "positive_class": 1,
+            "primaryMetric": [
+              "f1_score"
+            ],
+            "sampling": {
+              "resampling_minority_percentage": 0.3
+            },
+            "split": {
+              "ratio": [
+                0.75,
+                0.15,
+                0.1
+              ]
+            },
+            "target_col": "hospital_expire_flag",
+            "task": "classification",
+            "username": "J.Doe"
+          },
+          {
+            "description": "Predicting Number of Days at ICU based on SAPSS-II",
+            "feature_selection": {
+              "name": "SelectKBest",
+              "parameters": {
+                "k": 25,
+                "score_func": "mutual_info_regression"
+              }
+            },
+            "imputation": [
+              {
+                "all_numerical": true,
+                "name": "Median"
+              }
+            ],
+            "metrics": [
+              {
+                "name": "rmse",
+                "threshold": 5
+              },
+              {
+                "name": "r2_score",
+                "threshold": 0.5
+              }
+            ],
+            "new_feature": [],
+            "primaryMetric": [
+              "r2_score"
+            ],
+            "split": {
+              "ratio": [
+                0.75,
+                0.15,
+                0.1
+              ]
+            },
+            "target_col": "stay_duration",
+            "task": "regression",
+            "username": "J.Doe"
+          }
+        ]
+      },
+      "SamplingConfig": {
+        "properties": {
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "library": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Library"
+          },
+          "language": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ProgrammingLanguages"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "parameters": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parameters"
+          },
+          "resampling_minority_percentage": {
+            "type": "number",
+            "title": "Resampling Minority Percentage",
+            "default": 1e-05
+          }
+        },
+        "type": "object",
+        "title": "SamplingConfig",
+        "description": "configuration for resampling\nThe resampling is applied, only if the ration of minority\nclass is smaller than the value stored in \n'resampling_minority_percentage'"
+      },
+      "SplitConfig": {
+        "properties": {
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "library": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Library"
+          },
+          "language": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ProgrammingLanguages"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "parameters": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parameters"
+          },
+          "ratio": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "title": "Ratio",
+            "default": [
+              0.7,
+              0.2,
+              0.1
+            ]
+          }
+        },
+        "type": "object",
+        "title": "SplitConfig"
+      },
+      "StepConfig": {
+        "properties": {
+          "step_name": {
+            "type": "string",
+            "title": "Step Name"
+          },
+          "config": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SplitConfig"
+              },
+              {
+                "items": {
+                  "$ref": "#/components/schemas/ColumnTransformerConfig"
+                },
+                "type": "array"
+              },
+              {
+                "items": {
+                  "$ref": "#/components/schemas/MetricsConfig"
+                },
+                "type": "array"
+              },
+              {
+                "items": {
+                  "$ref": "#/components/schemas/AlgorithmConfig"
+                },
+                "type": "array"
+              }
+            ],
+            "title": "Config"
+          }
+        },
+        "type": "object",
+        "required": [
+          "step_name",
+          "config"
+        ],
+        "title": "StepConfig",
+        "description": "The structure of the input configuration of the step",
+        "examples": [
+          {
+            "config": {
+              "name": "ReplaceWithMedian",
+              "parameters": {
+                "columns": [
+                  "TSH",
+                  "T3",
+                  "T4"
+                ]
+              }
+            },
+            "step_name": "impute"
+          }
+        ]
+      },
+      "Steps": {
+        "type": "string",
+        "enum": [
+          "Visualization",
+          "DataSplitting",
+          "HandlingMissingValues",
+          "Sampling",
+          "Estimator",
+          "Metric",
+          "NewFeature",
+          "FeatureSelection",
+          "Encoders",
+          "HyperparameterTuning",
+          "Distributions"
+        ],
+        "title": "Steps",
+        "description": "list of all steps and sub_steps such as distributions and tuning algorithms"
+      },
+      "TargetConfig": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "type": {
+            "$ref": "#/components/schemas/DataTypes"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "type"
+        ],
+        "title": "TargetConfig"
+      },
+      "TaskTypes": {
+        "type": "string",
+        "enum": [
+          "classification",
+          "regression",
+          "clustering",
+          "timeseries_regression",
+          "timeseries_classification",
+          "anomaly_detection",
+          "data_transformation"
+        ],
+        "title": "TaskTypes"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Recipe",
+      "description": "Set up and edit an mlflow recipe project."
+    },
+    {
+      "name": "Methods",
+      "description": "Retrieve information about available machine learning methods."
+    },
+    {
+      "name": "Execute",
+      "description": "Execute specified mlflow recipe."
+    },
+    {
+      "name": "Results",
+      "description": "Retrieve mlflow experiment results."
+    }
+  ]
+}

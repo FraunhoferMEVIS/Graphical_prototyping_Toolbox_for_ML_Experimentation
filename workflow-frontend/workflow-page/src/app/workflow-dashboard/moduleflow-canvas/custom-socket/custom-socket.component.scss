@@ -1,0 +1,21 @@
+@import "../vars";
+
+:host {
+  @apply rounded-full inline-block cursor-pointer bg-white;
+  // @apply hover:bg-gray-200; hover disabled since socket is not interactive
+  border: 3px solid grey;
+  width: $socket-size;
+  height: $socket-size;
+  vertical-align: middle;
+  z-index: 2;
+  box-sizing: border-box;
+  visibility: hidden;
+}
+
+:host(.exported) {
+  @apply border-green-600 bg-green-600;
+}
+
+:host(.exporting) {
+  @apply border-orange-500 bg-orange-500;
+}

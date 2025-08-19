@@ -1,0 +1,5 @@
+requests==2.31.*
+fastapi[all]==0.111.*
+orjson==3.10.6 #temp fix
+PyYAML==6.0.*
+pytest==8.3.*

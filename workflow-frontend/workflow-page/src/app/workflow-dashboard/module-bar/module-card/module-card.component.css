@@ -1,0 +1,27 @@
+.module-card {
+  @apply flex-row rounded-xl shadow-md overflow-hidden p-1 text-center;
+}
+
+.module-card-icon {
+  @apply h-full w-full flex flex-col items-center;
+}
+
+.module-card-img {
+  @apply h-16 w-full object-contain md:h-full md:w-16 py-2;
+}
+
+.module-card-body {
+  @apply p-1;
+}
+
+.module-card-title {
+  @apply text-sm text-secondary;
+}
+
+.module-card-subtitle {
+  @apply text-sm;
+}
+
+.module-card-description {
+  @apply pt-2 text-sm text-slate-500 hidden;
+}

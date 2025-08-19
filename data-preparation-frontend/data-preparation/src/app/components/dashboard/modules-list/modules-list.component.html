@@ -1,0 +1,17 @@
+<h2 class="title">{{ title }}</h2>
+<mat-list>
+  <div *ngFor="let moduleItem of moduleItems">
+    <mat-list-item class="my-auto" draggable [dragData]="moduleItem.module">
+      <div class="flex flex-row">
+        <mat-icon
+          class="icon"
+          aria-hidden="true"
+          [fontIcon]="moduleItem.fontIcon"
+          [matTooltip]="moduleItem.module.subtitle"
+        ></mat-icon>
+        {{ moduleItem.module.title }}
+      </div>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+  </div>
+</mat-list>

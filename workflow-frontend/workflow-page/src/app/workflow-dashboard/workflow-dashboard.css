@@ -1,0 +1,22 @@
+.dashboard {
+  @apply w-full h-full flex flex-col;
+}
+
+.dashboard-canvas {
+  @apply w-full grow relative;
+}
+
+.dashboard-bar {
+  @apply w-full;
+}
+
+.spinner {
+  margin: auto auto;
+}
+
+.center {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin: auto auto;
+}

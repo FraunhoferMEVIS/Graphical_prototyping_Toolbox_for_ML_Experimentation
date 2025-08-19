@@ -1,0 +1,30 @@
+.help {
+  max-height: 200px;
+  overflow: auto;
+  white-space: pre;
+}
+
+mat-card {
+  width: 1000px;
+  max-height: 1000px;
+}
+
+mat-form-field {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.toggle {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+mat-divider {
+  margin: 10px;
+}
+
+mat-slide-toggle {
+  transform: scale(1.4);
+  margin-left: 15px;
+  margin-right: 15px;
+}

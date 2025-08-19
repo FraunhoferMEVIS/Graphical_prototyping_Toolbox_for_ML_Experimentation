@@ -1,0 +1,41 @@
+<mat-list class="category-list">
+  <div *ngFor="let categoryItem of categoryItems">
+    <!-- category item -->
+    <mat-list-item
+      matTooltip="Click to expand category"
+      matTooltipShowDelay="1000"
+      class="category-item prevent-text-select"
+      [class.expanded]="categoryItem.expanded"
+      (click)="toggleExpand(categoryItem)"
+    >
+      <div class="flex flex-row align-middle">
+        <mat-icon
+          [ngClass]="getColor(categoryItem.name)"
+          class="category-icon"
+          aria-hidden="true"
+          [fontIcon]="categoryItem.icon"
+        ></mat-icon>
+        <div class="category-title">{{ categoryItem.name }}</div>
+      </div>
+    </mat-list-item>
+
+    <!-- module list of a category -->
+    <mat-list *ngIf="categoryItem.expanded">
+      <div
+        *ngFor="
+          let module of categoryItem.children;
+          when: categoryItem.children != null
+        "
+      >
+        <mat-list-item
+          class="module-item prevent-text-select"
+          draggable
+          [dragData]="module"
+        >
+          <div class="module-item-title">{{ module.title }}</div>
+        </mat-list-item>
+      </div>
+    </mat-list>
+    <mat-divider></mat-divider>
+  </div>
+</mat-list>
