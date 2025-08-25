@@ -9,6 +9,8 @@ The software is provided on "AS IS" basis, i.e. it comes without any warranty, e
 
 Due to the completion of the project, we are not pursuing extensions or adaptations. If you are interested in a joint project or collaboration, we look forward to hearing from you. Please contact doerte.corr@mevis.fraunhofer.de
 
+This work was funded based on a resolution of the German parliament by the German Federal Ministry of Health (BMG, Project KI-FDZ, Funding Code: 2521DAT01B)
+
 # Kubernetes Setup
 
 This document describes how to set up our "Graphical prototyping Toolbox for Machine Learning Experimentation" on a Kubernetes cluster. Please note that in some places the helm chart and code might refer to it as "AI-Sandbox", which was its internal project name.
