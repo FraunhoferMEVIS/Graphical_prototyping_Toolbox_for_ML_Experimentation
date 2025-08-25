@@ -1,3 +1,14 @@
+# Graphical prototyping Toolbox for ML Experimentation
+
+The Graphical Prototyping Toolbox for ML Experimentation is a toolbox to design, prepare and implement Machine Learning (ML) experiments for tabular health data, which was developed within the KI-FDZ project. 
+It is a composition of web applications which can be accessed from a central workflow page. It contains components for data preparation (maratus), experiment setup (mlkitchen) and algorithm tracking (tracking server, which comes with base library mlflow). 
+
+The user has to create a project and then follow the steps mentioned on the workflow page. Intermediate results are shared between the components, based on included import and export functionality. The user can perform various data preprocessing steps (load from file, filter, transform, create new features, etc.) to prepare one or multiple input tables and merge it into one table for proceeding ML analysis. The user can select ML algorithms from the visual interface of mlkitchen and start the experiments including hyperparameter search for some of the parameters. Resulting metrics as well as the parameterization of successfully passed experiments are stored and can be investigated on the tracking server. 
+
+The software is provided on "AS IS" basis, i.e. it comes without any warranty, express or implied including (without limitations) any warranty of merchantability and warranty of fitness for a particular purpose.
+
+Due to the completion of the project, we are not pursuing extensions or adaptations. If you are interested in a joint project or collaboration, we look forward to hearing from you. Please contact doerte.corr@mevis.fraunhofer.de
+
 # Kubernetes Setup
 
 This document describes how to set up our "Graphical prototyping Toolbox for Machine Learning Experimentation" on a Kubernetes cluster. Please note that in some places the helm chart and code might refer to it as "AI-Sandbox", which was its internal project name.
