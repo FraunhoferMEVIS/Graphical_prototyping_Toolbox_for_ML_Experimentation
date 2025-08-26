@@ -7,7 +7,7 @@ The user creates a project and then follows the steps mentioned on the workflow 
 
 The software is provided on "AS IS" basis, i.e. it comes without any warranty, express or implied including (without limitations) any warranty of merchantability and warranty of fitness for a particular purpose.
 
-Due to the completion of the project, we are not pursuing extensions or adaptations. If you are interested in a joint project or collaboration, we look forward to hearing from you. Please contact doerte.corr@mevis.fraunhofer.de
+Due to the completion of the funded project, we are currently not pursuing extensions or adaptations of the code. If you are interested in a joint project or collaboration, we look forward to hearing from you. Please contact doerte.corr@mevis.fraunhofer.de or melissa.finster@mevis.fraunhofer.de
 
 This work was funded based on a resolution of the German parliament by the German Federal Ministry of Health (BMG, Project KI-FDZ, Funding Code: 2521DAT01B)
 
