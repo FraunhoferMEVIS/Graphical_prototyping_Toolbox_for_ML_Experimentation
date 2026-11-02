@@ -1,3 +1,7 @@
+# mlflow version
+
+2.16.*
+
 # Commands to build, tag and push and locally start docker image:
 
 # ! from parent folder !
